@@ -1,5 +1,10 @@
 # 📝 AI Note App
 
+![status](https://img.shields.io/badge/status-WIP-orange)
+
+⚠️ **Work in Progress**: This project is under active development.  
+Features and docs will be updated as progress continues.
+
 An AI-powered note-taking application built with **Next.js, TypeScript, Redux, and OpenAI**.  
 This project demonstrates scalable frontend architecture, authentication, AI integration, state management, and production-quality practices.
 
