@@ -1,27 +1,38 @@
-# 🌤️ AI Note App
+# 📝 AI Note App
 
-A sleek and responsive weather application built with **Vue 3**, styled using **TailwindCSS**, and tested with **Playwright**. This project also includes a GitHub Actions CI workflow to run end-to-end tests on every push and pull request to the `main` branch.
-
----
-
-## 🚀 Features
-
-- 🔍 Get current weather data using **Axios**
-- ⚡ Fast development with **Vite**
-- 🎨 Beautiful UI powered by **TailwindCSS**
-- ✅ End-to-end testing with **Playwright**
-- 🔁 Continuous integration using **GitHub Actions**
+An AI-powered note-taking application built with **Next.js, TypeScript, Redux, and OpenAI**.  
+This project demonstrates scalable frontend architecture, authentication, AI integration, state management, and production-quality practices.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- [Vue 3](https://vuejs.org/)
-- [Vite](https://vitejs.dev/)
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [TailwindCSS](https://tailwindcss.com/)
-- [Axios](https://axios-http.com/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [NextAuth.js](https://next-auth.js.org/)
+- [OpenAI API](https://platform.openai.com/)
 - [Playwright](https://playwright.dev/)
 - [GitHub Actions](https://github.com/features/actions)
+- **Database**: Prisma + PostgreSQL (or MongoDB)
+
+---
+
+## 📐 Architecture (High-Level)
+
+Flow: **User → Next.js UI → Redux → API Routes (Auth / DB / AI) → OpenAI → Back to UI**
+
+---
+
+## 🧑‍💻 Features (Planned)
+
+- ✅ Authentication (Google & Credentials via NextAuth)  
+- ✅ Create, edit, and persist notes  
+- ✅ AI-powered note generation with OpenAI  
+- ✅ State management with Redux Toolkit  
+- ✅ Responsive UI with Tailwind  
+- ✅ Deployment on Vercel
 
 ---
 
