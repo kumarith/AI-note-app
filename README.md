@@ -34,10 +34,18 @@ Flow: **User → Next.js UI → Redux → API Routes (Auth / DB / AI) → OpenAI
 
 - ✅ Authentication (Google & Credentials via NextAuth)  
 - ✅ Create, edit, and persist notes  
-- ✅ AI-powered note generation with OpenAI  
+- ✅ AI-powered note generation with Groq Cloud  
 - ✅ State management with Redux Toolkit  
 - ✅ Responsive UI with Tailwind  
 - ✅ Deployment on Vercel
+
+---
+
+## ⚡ AI Provider
+
+This app integrates with **Groq Cloud** for AI-powered note generation.  
+- Default Model: **LLaMA 3 8B (fast + lightweight)**  
+- Alternative Models: Mixtral, Gemma  
 
 ---
 
