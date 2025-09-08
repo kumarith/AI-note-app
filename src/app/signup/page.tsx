@@ -23,6 +23,12 @@ export default function SignupPage() {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form submitted:", form);
+    handleSignup(e);
+  };
+
   return (
     <div className="flex justify-center p-8">
       <form onSubmit={handleSignup} className="flex flex-col gap-4 w-80">
@@ -44,7 +50,7 @@ export default function SignupPage() {
           className="border p-2 rounded"
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
-        <button className="bg-blue-500 text-white p-2 rounded">
+        <button className="bg-blue-500 text-white p-2 rounded" onClick={handleSubmit}>
           Sign Up
         </button>
         {error && <p className="text-red-500">{error}</p>}

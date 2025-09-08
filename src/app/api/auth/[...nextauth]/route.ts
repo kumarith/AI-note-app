@@ -4,7 +4,8 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
 import bcrypt from "bcryptjs";
-import { prisma } from "../../../lib/prisma";
+import { prisma } from "@/lib/prisma";
+
 
 export const authOptions : NextAuthOptions = {
   providers: [
