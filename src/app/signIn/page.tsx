@@ -18,7 +18,7 @@ const SignIn = () => {
       console.error("Failed to sign in with email:", res?.error);
       return;
     }
-    console.log(res);
+    console.log('response from signin',res);
   };
 
   return (

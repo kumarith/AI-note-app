@@ -10,6 +10,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Email and password are required" }, { status: 400 });
     }
 
+    if (password.length < 6) {
+      return NextResponse.json({ error: "Password too short" }, { status: 400 });
+    }
+
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -30,11 +34,12 @@ export async function POST(request: Request) {
         password: hashedPassword,
       },
     });
-    const savedUser = await newUser.save();
-    console.log("User created:", savedUser);
+    
+    console.log("User created:", newUser);
+    const { password: _, ...userWithoutPassword } = newUser;
     
         
-    return NextResponse.json({ message: "User created successfully", user: newUser }, { status: 201 });
+    return NextResponse.json({ message: "User created successfully", user: userWithoutPassword }, { status: 201 });
   } catch (error) {
     console.error("Error during signup:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

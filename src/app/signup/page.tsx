@@ -16,7 +16,7 @@ export default function SignupPage() {
     });
 
     if (res.ok) {
-      window.location.href = "/signin";
+      window.location.href = "/signIn";
     } else {
       const data = await res.json();
       setError(data.error || "Something went wrong");
