@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
+
 
 const Dashboard: React.FC = () => {
   const [notes, setNotes] = useState<string[]>([]);
@@ -8,6 +10,7 @@ const Dashboard: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editValue, setEditValue] = useState("");
+   const { data: session } = useSession();
 
   const handleAddNote = () => {
     if (noteInput.trim() !== "") {
@@ -39,7 +42,7 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  // filter notes for search
+ 
   const filteredNotes = notes.filter((note) =>
     note.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -47,6 +50,25 @@ const Dashboard: React.FC = () => {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">AI Notes Dashboard</h1>
+      
+       {/* User Info + Sign Out */}
+        <div className="flex items-center gap-4">
+          {session?.user && (
+            <span className="text-gray-700 text-sm">
+              Signed in as <strong>{session.user.email}</strong>
+            </span>
+          )}
+          <button
+            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
+          onClick={() => {
+            signOut({ callbackUrl: '/signIn' });
+            console.log("Sign out clicked");
+          }}
+          >
+            Sign Out
+          </button>
+        </div>
+      
 
       {/* Search */}
       <input
