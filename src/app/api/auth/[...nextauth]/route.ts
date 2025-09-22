@@ -1,10 +1,12 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -24,6 +26,28 @@ export const authOptions: NextAuthOptions = {
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
+
+        // If user exists but has no Account entry, create one
+
+        if (user) {
+  const existingAccount = await prisma.account.findFirst({
+    where: {
+      userId: user.id,
+      provider: "credentials",
+    },
+  });
+
+  if (!existingAccount) {
+    await prisma.account.create({
+      data: {
+        userId: user.id,
+        type: "credentials",
+        provider: "credentials",
+        providerAccountId: user.id, // or email
+      },
+    });
+  }
+}
 
         if (!user || !user.password) {
           throw new Error("No user found with this email");

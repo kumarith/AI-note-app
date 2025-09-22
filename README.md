@@ -20,7 +20,7 @@ This project demonstrates scalable frontend architecture, authentication, AI int
 - [OpenAI API](https://platform.openai.com/)
 - [Playwright](https://playwright.dev/)
 - [GitHub Actions](https://github.com/features/actions)
-- **Database**: Prisma + PostgreSQL (or MongoDB)
+- **Database**: Prisma + PostgreSQL 
 
 ---
 
@@ -33,7 +33,7 @@ Flow: **User → Next.js UI → Redux → API Routes (Auth / DB / AI) → OpenAI
 ## 🧑‍💻 Features (Planned)
 
 - ✅ Authentication (Google & Credentials via NextAuth)  
-- ✅ Create, edit, and persist notes  
+- ✅ Create, edit, and delete notes  
 - ✅ AI-powered note generation with Groq Cloud  
 - ✅ State management with Redux Toolkit  
 - ✅ Responsive UI with Tailwind  
