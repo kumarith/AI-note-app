@@ -1,20 +1,26 @@
 "use client";
 
 import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { signOut, useSession } from "next-auth/react";
+import { addNote, deleteNote, Note, updateNote } from "@/redux/notesSlice";
+import type { RootState } from "@/lib/store";
+
 
 
 const Dashboard: React.FC = () => {
-  const [notes, setNotes] = useState<string[]>([]);
+
   const [noteInput, setNoteInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [editNoteId, setEditNoteId] = useState<string | null>(null);
   const [editValue, setEditValue] = useState("");
    const { data: session } = useSession();
+  const notes = useAppSelector((state: RootState) => state.notes.items);
+  const dispatch = useAppDispatch();
 
-  const handleAddNote = () => {
+  const handleAddNote = async () => {
     if (noteInput.trim() !== "") {
-      setNotes([...notes, noteInput]);
+     dispatch(addNote(noteInput)); 
       setNoteInput("");
     }
   };
@@ -23,28 +29,29 @@ const Dashboard: React.FC = () => {
     setSearchQuery(e.target.value);
   };
 
-  const handleDelete = (index: number) => {
-    setNotes(notes.filter((_, i) => i !== index));
-  };
+ const handleDelete = (id : string) => {
+  dispatch(deleteNote(id));
+ };
+  
 
-  const handleEdit = (index: number, currentNote: string) => {
-    setEditIndex(index);
+  const handleEdit = (noteId: string, currentNote: string) => {
+    setEditNoteId(noteId);
     setEditValue(currentNote);
   };
 
   const handleSave = () => {
-    if (editIndex !== null && editValue.trim() !== "") {
-      const updatedNotes = [...notes];
-      updatedNotes[editIndex] = editValue;
-      setNotes(updatedNotes);
-      setEditIndex(null);
+    if (editValue.trim() !== "") {
+      if (editNoteId !== null) {
+        dispatch(updateNote({ id: editNoteId, content: editValue }));
+      }
+      setEditNoteId(null);
       setEditValue("");
     }
   };
 
  
-  const filteredNotes = notes.filter((note) =>
-    note.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredNotes : Note[] = notes.filter((note) =>
+    note.content.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -97,14 +104,14 @@ const Dashboard: React.FC = () => {
 
       {/* Notes grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {filteredNotes.map((note, index) => (
+        {filteredNotes.map((note) => (
           <div
-            key={index}
+            key={note.id}
             className="border border-gray-300 rounded-md p-4 shadow-sm hover:shadow-md transition-shadow"
           >
-            <h3 className="font-semibold text-lg mb-2">Note {index + 1}</h3>
+            <h3 className="font-semibold text-lg mb-2">Note {note.id}</h3>
 
-            {editIndex === index ? (
+            {editNoteId === note.id ? (
               <div>
                 <input
                   type="text"
@@ -119,7 +126,7 @@ const Dashboard: React.FC = () => {
                   Save
                 </button>
                 <button
-                  onClick={() => setEditIndex(null)}
+                  onClick={() => setEditNoteId(null)}
                   className="bg-gray-400 text-white px-3 py-1 rounded-md hover:bg-gray-500"
                 >
                   Cancel
@@ -127,16 +134,16 @@ const Dashboard: React.FC = () => {
               </div>
             ) : (
               <>
-                <p className="text-gray-600 mb-3">{note}</p>
+                <p className="text-gray-600 mb-3">{note.content}</p>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => handleEdit(index, note)}
+                    onClick={() => handleEdit(note.id, note.content)}
                     className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(index)}
+                    onClick={() => handleDelete(note.id)}
                     className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
                   >
                     Delete

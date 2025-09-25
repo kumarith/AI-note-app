@@ -48,6 +48,8 @@ export const updateNote = createAsyncThunk(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content }),
     });
+    const data = await res.json();
+    console.log("Response data:", data); // Debugging line
     if (!res.ok) throw new Error("Failed to update note");
     return (await res.json()) as Note;
   }
